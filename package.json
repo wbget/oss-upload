@@ -1,6 +1,6 @@
 {
   "name": "@wbget/oss-upload",
-  "version": "0.0.2",
+  "version": "1.0.0",
   "description": "upload for oss",
   "dependencies": {
     "ali-oss": "^6.17.1",

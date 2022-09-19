@@ -29,5 +29,8 @@
   "np": {
 		"yarn": false
 	},
-  "files": ["bin", "package.json"]
+  "files": ["bin", "package.json"],
+  "publishConfig": {
+    "access": "public"
+  }
 }

@@ -1,5 +1,5 @@
 {
-  "name": "oss-upload",
+  "name": "@wbget/oss-upload",
   "version": "1.0.0",
   "description": "upload for oss",
   "dependencies": {

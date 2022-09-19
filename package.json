@@ -8,7 +8,7 @@
     "readdirp": "^3.6.0"
   },
   "bin": {
-    "oss-upload": "index.js"
+    "oss-upload": "bin/index.js"
   },
   "keywords": [
     "oss",
@@ -19,9 +19,15 @@
   "author": "wbget",
   "license": "MIT",
   "devDependencies": {
-    "mwts": "^1.2.2"
+    "mwts": "^1.2.2",
+    "np": "^7.6.2"
   },
   "scripts": {
-    "test": "test.js"
-  }
+    "test": "test.js",
+    "release" : "npx np"
+  },
+  "np": {
+		"yarn": false,
+		"contents": "bin"
+	}
 }

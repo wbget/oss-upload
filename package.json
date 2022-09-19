@@ -24,7 +24,7 @@
   },
   "scripts": {
     "test": "test.js",
-    "release": "npx np --no-cleanup --no-tests"
+    "release": "npx np --no-cleanup --no-tests --no-2fa"
   },
   "np": {
     "yarn": false

@@ -5,7 +5,7 @@
 ## Install
 
 ```
-npm install -D oss-upload
+npm install -D @wbget/oss-upload
 ```
 
 ## Usage

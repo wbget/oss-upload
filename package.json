@@ -1,5 +1,5 @@
 {
-  "name": "oss-upload",
+  "name": "@wbget/oss-upload",
   "version": "0.0.0",
   "description": "upload for oss",
   "dependencies": {
@@ -24,13 +24,24 @@
   },
   "scripts": {
     "test": "test.js",
-    "release" : "npx np --no-cleanup --no-tests"
+    "release": "npx np --no-cleanup --no-tests"
   },
   "np": {
-		"yarn": false
-	},
-  "files": ["bin", "package.json"],
+    "yarn": false
+  },
+  "files": [
+    "bin",
+    "package.json"
+  ],
   "publishConfig": {
     "access": "public"
-  }
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/wbget/oss-upload.git"
+  },
+  "bugs": {
+    "url": "https://github.com/wbget/oss-upload/issues"
+  },
+  "homepage": "https://github.com/wbget/oss-upload#readme"
 }

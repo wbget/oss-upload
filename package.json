@@ -27,7 +27,7 @@
     "release" : "npx np"
   },
   "np": {
-		"yarn": false,
-		"contents": "bin"
-	}
+		"yarn": false
+	},
+  "files": ["bin", "package.json"]
 }

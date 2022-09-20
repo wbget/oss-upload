@@ -11,13 +11,13 @@ if (!configPath) {
   console.error('ERROR: 需要指定配置');
   process.exit(-1);
 }
-const config = JSON.parse(
-  fs.readFileSync(path.resolve(process.cwd(), configPath)).toString('utf8')
-);
+const from = path.resolve(process.cwd(), configPath);
+const config = JSON.parse(fs.readFileSync(from).toString('utf8'));
+const root = path.dirname(from);
 
 const client = new OSS(config);
 
-const JSB_PATH = config.root;
+const WEB_PATH = path.resolve(root, config.root);
 const OSS_PATH = config.remoteRoot;
 const remotes = [];
 let errors = [];
@@ -37,7 +37,7 @@ async function list() {
 }
 
 (async () => {
-  const files = await readdirp.promise(path.resolve(process.cwd(), JSB_PATH));
+  const files = await readdirp.promise(WEB_PATH);
   await list();
   const upload = async (name, path) =>
     await new Promise(resolve => {

@@ -57,9 +57,9 @@ async function list() {
     }).catch(() => {});
   const targets = files
     .map(value => {
-      const { path, fullPath } = value;
-      const name = `${OSS_PATH}/${path}`;
-      if (path === 'index.html') return { name, path: fullPath };
+      const { path: p, fullPath } = value;
+      const name = path.join(OSS_PATH, p).replace(/\\/g, '/')
+      if (p === 'index.html') return { name, path: fullPath };
       if (remotes.findIndex(p => p === name) !== -1) {
         return null;
       }

@@ -31,7 +31,7 @@ async function list() {
     });
     marker = result.nextMarker;
     if (result.objects) {
-      remotes.push(...result.objects.map(v => v.name));
+      remotes.push(...result.objects.map(v => ({name: v.name, size: v.size})));
     }
   } while (marker);
 }
@@ -60,8 +60,11 @@ async function list() {
       const { path: p, fullPath } = value;
       const name = path.join(OSS_PATH, p).replace(/\\/g, '/')
       if (p === 'index.html') return { name, path: fullPath };
-      if (remotes.findIndex(p => p === name) !== -1) {
-        return null;
+      const index = remotes.findIndex(p => p.name === name);
+      if (index !== -1) {
+        if(remotes[index].size === fs.statSync(fullPath).size) {
+          return null;
+        }
       }
       return { name, path: fullPath };
     })

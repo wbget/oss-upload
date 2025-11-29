@@ -19,6 +19,7 @@ const client = new OSS(config);
 
 const WEB_PATH = path.resolve(root, config.root);
 const OSS_PATH = config.remoteRoot;
+const Rewrite = !config.rewrite;
 const remotes = [];
 let errors = [];
 const maxKeys = 1000;
@@ -28,10 +29,13 @@ async function list() {
     const result = await client.list({
       marker,
       'max-keys': maxKeys,
+      prefix: config.remoteRoot,
     });
     marker = result.nextMarker;
     if (result.objects) {
-      remotes.push(...result.objects.map(v => ({name: v.name, size: v.size})));
+      remotes.push(
+        ...result.objects.map(v => ({ name: v.name, size: v.size }))
+      );
     }
   } while (marker);
 }
@@ -58,19 +62,36 @@ async function list() {
   const targets = files
     .map(value => {
       const { path: p, fullPath } = value;
-      const name = path.join(OSS_PATH, p).replace(/\\/g, '/')
+      const name = path.join(OSS_PATH, p).replace(/\\/g, '/');
       if (p === 'index.html') return { name, path: fullPath };
       const index = remotes.findIndex(p => p.name === name);
       if (index !== -1) {
-        if(remotes[index].size === fs.statSync(fullPath).size) {
+        if (remotes[index].size === fs.statSync(fullPath).size) {
           return null;
         }
       }
       return { name, path: fullPath };
     })
     .filter(v => !!v);
-  console.table(targets, ['name', 'path']);
+  const exists = files.map(p => {
+    return path.join(OSS_PATH, p.path).replace(/\\/g, '/');
+  });
+  const removes = remotes
+    .map(value => {
+      const { name } = value;
+      const index = exists.findIndex(v => v === name);
+      if (index !== -1) {
+        return null;
+      }
+      return name;
+    })
+    .filter(v => !!v);
   console.log(`需要上传文件数：${targets.length}`);
+  console.table(targets, ['name', 'path']);
+  if (Rewrite) {
+    console.log(`需要删除文件数：${removes.length}`);
+    console.table(removes);
+  }
   process.stdin.setEncoding('utf8');
 
   process.stdin.on('readable', async () => {
@@ -78,6 +99,11 @@ async function list() {
       width: 20,
       total: targets.length,
     });
+    if (removes.length > 0) {
+      await client.deleteMulti(removes, {
+        quiet: true,
+      });
+    }
     for await (const target of targets) {
       const { name, path } = target;
       await upload(name, path);

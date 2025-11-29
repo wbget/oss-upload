@@ -23,7 +23,6 @@
     "np": "^7.6.2"
   },
   "scripts": {
-    "test": "test.js",
     "release": "npx np --no-cleanup --no-tests --no-2fa"
   },
   "np": {

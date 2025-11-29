@@ -1,9 +1,9 @@
 {
-    
   "region": "oss-cn-shanghai",
   "accessKeyId": "xxxxxxxxxxx",
   "accessKeySecret": "xxxxxxxxxxxxxxxxxxxxxxxxx",
   "bucket": "my-bucket",
   "root": "./build/web-mobile",
-  "remoteRoot": "my-game"
+  "remoteRoot": "my-game",
+  "rewrite": true
 }

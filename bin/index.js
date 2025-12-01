@@ -19,7 +19,7 @@ const client = new OSS(config);
 
 const WEB_PATH = path.resolve(root, config.root);
 const OSS_PATH = config.remoteRoot;
-const Rewrite = !config.rewrite;
+const Rewrite = !!config.rewrite;
 const remotes = [];
 let errors = [];
 const maxKeys = 1000;
